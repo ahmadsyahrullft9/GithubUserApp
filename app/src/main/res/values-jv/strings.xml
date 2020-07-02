@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GithubUserApi</string>
+
+    <string name="lorem">lorem ipsum dolor sit amet.</string>
+
+    <string name="fullname">Jeneng Dhowo</string>
+    <string name="username">Celukan</string>
+    <string name="company">Nggon Gawe</string>
+    <string name="location">Panggonan</string>
+    <string name="repository">pandhuman</string>
+    <string name="following">ngawulani</string>
+    <string name="follower">kawulo</string>
+    <string name="title_main">Tiang Phundi Mawon Github</string>
+    <string name="search_title">golek</string>
+    <string name="title_detailuserfragment">Tiang Phundi</string>
+    <string name="title_detail">Tiang Kang Njelimet</string>
+    <string name="title_listfollower">Kawulo</string>
+    <string name="title_listfollowing">Ngawulani</string>
+</resources>

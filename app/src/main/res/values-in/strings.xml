@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GithubUserApi</string>
+
+    <string name="lorem">lorem ipsum dolor sit amet.</string>
+
+    <string name="fullname">Nama Lengkap</string>
+    <string name="username">Username</string>
+    <string name="company">Perusahaan</string>
+    <string name="location">Lokasi</string>
+    <string name="repository">repositori</string>
+    <string name="following">mengikuti</string>
+    <string name="follower">pengikut</string>
+    <string name="title_main">Daftar Pengguna Github</string>
+    <string name="search_title">cari</string>
+    <string name="title_detailuserfragment">Info Pengguna</string>
+    <string name="title_detail">Detail Pengguna</string>
+    <string name="title_listfollower">Pengikut</string>
+    <string name="title_listfollowing">Mengikuti</string>
+</resources>
