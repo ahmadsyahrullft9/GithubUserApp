@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ConsumerApp</string>
+    <string name="lorem" translatable="false">lorem ipsum dolor sit amet.</string>
+    <string name="title_main">Favorite User List</string>
+    <string name="err_empty">Data not found</string>
+    <string name="err_content_provider">Failed to find content provider</string>
+</resources>

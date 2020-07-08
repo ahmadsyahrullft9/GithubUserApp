@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dicoding.submission.githubapi.R
+import dicoding.submission.githubapi.models.CrudState
 import dicoding.submission.githubapi.models.User
 import kotlinx.android.synthetic.main.item_user.view.*
 
@@ -19,7 +20,6 @@ class UserAdapter(
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private var listener: Listener? = listener
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
@@ -39,7 +39,7 @@ class UserAdapter(
         val user = userList[position]
         holder.onBind(user)
         holder.itemView.setOnClickListener({
-            listener?.detail_user(user)
+            listener?.callback(user, CrudState.READ)
         })
     }
 
@@ -62,6 +62,6 @@ class UserAdapter(
     }
 
     interface Listener {
-        fun detail_user(user: User)
+        fun callback(user: User, crudState: CrudState)
     }
 }

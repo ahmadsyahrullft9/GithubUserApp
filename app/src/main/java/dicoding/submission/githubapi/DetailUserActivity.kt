@@ -1,20 +1,23 @@
 package dicoding.submission.githubapi
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import dicoding.submission.githubapi.adapter.ViewPagerAdapter
 import dicoding.submission.githubapi.fragments.DetailUserFragment
 import dicoding.submission.githubapi.fragments.FollowersListFragment
 import dicoding.submission.githubapi.fragments.FollowingListFragment
+import dicoding.submission.githubapi.models.User
 import kotlinx.android.synthetic.main.activity_detailuser.*
 
 class DetailUserActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "DetailUserActivity"
-        val USERNAME = "username"
+        val USER = "user"
     }
 
+    private lateinit var user: User
     var username: String? = null
     private lateinit var followingListFragment: FollowingListFragment
     private lateinit var followersListFragment: FollowersListFragment
@@ -25,13 +28,15 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detailuser)
 
         val bundle = intent.extras
-        username = bundle?.getString(USERNAME)
+        user = bundle?.getParcelable(USER)!!
+        username = user.login
+        Log.d(TAG, "onCreate: " + user.login)
 
         toolbar.title = getString(R.string.title_detail)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        detailUserFragment = DetailUserFragment.newInstance(username.toString())
+        detailUserFragment = DetailUserFragment.newInstance(user)
         followersListFragment = FollowersListFragment.newInstance(username.toString())
         followingListFragment = FollowingListFragment.newInstance(username.toString())
 

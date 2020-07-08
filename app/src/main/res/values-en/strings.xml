@@ -16,4 +16,12 @@
     <string name="title_detail">Detail User</string>
     <string name="title_listfollower">Follower</string>
     <string name="title_listfollowing">Following</string>
+    <string name="title_favorit">List User Favorite</string>
+    <string name="favorit_title">favorite</string>
+    <string name="setting_title">setting</string>
+    <string name="setting_reminder">Setting Reminder</string>
+    <string name="setting_reminder_desc">switch on/off reminder</string>
+    <string name="time_reminder">Time Reminder</string>
+    <string name="title_setting">Setting</string>
+    <string name="err_empty">Data not found</string>
 </resources>

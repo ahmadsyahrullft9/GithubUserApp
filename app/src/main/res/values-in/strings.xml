@@ -16,4 +16,12 @@
     <string name="title_detail">Detail Pengguna</string>
     <string name="title_listfollower">Pengikut</string>
     <string name="title_listfollowing">Mengikuti</string>
+    <string name="title_favorit">Daftar Pengguna Favorit</string>
+    <string name="favorit_title">favorit</string>
+    <string name="setting_title">pengaturan</string>
+    <string name="setting_reminder">Pengaturan Pengingat</string>
+    <string name="setting_reminder_desc">pengaturan untuk menghidupkan dan mematikan reminder</string>
+    <string name="time_reminder">Waktu Pengingat</string>
+    <string name="title_setting">Pengaturan</string>
+    <string name="err_empty">Tidak ada data</string>
 </resources>

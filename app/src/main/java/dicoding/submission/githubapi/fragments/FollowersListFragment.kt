@@ -10,9 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import dicoding.submission.githubapi.R
+import dicoding.submission.githubapi.models.CrudState
 import dicoding.submission.githubapi.models.User
-import dicoding.submission.githubapi.network.NetState
-import dicoding.submission.githubapi.network.NetStatus
+import dicoding.submission.githubapi.models.NetState
+import dicoding.submission.githubapi.models.NetStatus
 import dicoding.submission.githubapi.viewmodels.UserViewModel
 import dicoding.submission.githubuserapp.adapter.UserAdapter
 import kotlinx.android.synthetic.main.fragment_followers.*
@@ -25,9 +26,9 @@ class FollowersListFragment : Fragment() {
 
         fun newInstance(username: String): FollowersListFragment {
             val instance = FollowersListFragment()
-            val args = Bundle()
-            args.putString(USERNAME, username)
-            instance.arguments = args
+            instance.arguments = Bundle().apply {
+                putString(USERNAME, username)
+            }
             return instance
         }
     }
@@ -40,7 +41,7 @@ class FollowersListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        username = arguments?.getString(DetailUserFragment.USERNAME)
+        username = arguments?.getString(USERNAME)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,11 +51,10 @@ class FollowersListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userAdapter = UserAdapter(activity, userList, object : UserAdapter.Listener {
-            override fun detail_user(user: User) {
-                Log.d(TAG, user.login.toString())
-                //ke halaman detail user
-                //goto_detailuser(user.login.toString())
+            override fun callback(user: User, crudState: CrudState) {
+                TODO("Not yet implemented")
             }
+
         })
 
         recyclerview.setHasFixedSize(true)

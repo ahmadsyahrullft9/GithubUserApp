@@ -1,4 +1,4 @@
-package dicoding.submission.githubapi.network
+package dicoding.submission.githubapi.models
 
 class NetState(val status: NetStatus, val message: String) {
 

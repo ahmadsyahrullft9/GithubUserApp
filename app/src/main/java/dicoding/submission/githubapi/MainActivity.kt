@@ -4,15 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import dicoding.submission.githubapi.models.CrudState
 import dicoding.submission.githubapi.models.User
-import dicoding.submission.githubapi.network.NetState
-import dicoding.submission.githubapi.network.NetStatus
+import dicoding.submission.githubapi.models.NetState
+import dicoding.submission.githubapi.models.NetStatus
 import dicoding.submission.githubapi.viewmodels.UserViewModel
 import dicoding.submission.githubuserapp.adapter.UserAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,10 +41,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         userAdapter = UserAdapter(this, userList, object : UserAdapter.Listener {
-            override fun detail_user(user: User) {
+            override fun callback(user: User, crudState: CrudState) {
                 Log.d(TAG, user.login.toString())
-                //ke halaman detail user
-                goto_detailuser(user.login.toString())
+                if (crudState == CrudState.READ) goto_detailuser(user)
             }
         })
 
@@ -78,12 +79,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun goto_detailuser(username: String) {
+    private fun goto_detailuser(user:User) {
         val detail_intent = Intent(this@MainActivity, DetailUserActivity::class.java)
         val bundle = Bundle()
-        bundle.putString(DetailUserActivity.USERNAME, username)
+        bundle.putParcelable(DetailUserActivity.USER, user)
         detail_intent.putExtras(bundle)
         startActivity(detail_intent)
+    }
+
+    private fun goto_favuser() {
+        val fav_intent = Intent(this@MainActivity, FavoritActivity::class.java)
+        startActivity(fav_intent)
+    }
+
+    private fun goto_setting() {
+        val set_intent = Intent(this@MainActivity, SettingReminderActivity::class.java)
+        startActivity(set_intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -110,6 +121,16 @@ class MainActivity : AppCompatActivity() {
         })
 
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.fav_menu_item) {
+            goto_favuser()
+            return true
+        }else if(item.itemId == R.id.set_menu_item){
+            goto_setting()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

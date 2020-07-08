@@ -16,4 +16,12 @@
     <string name="title_detail">Tiang Kang Njelimet</string>
     <string name="title_listfollower">Kawulo</string>
     <string name="title_listfollowing">Ngawulani</string>
+    <string name="title_favorit">Tiang Kang Tak Remeni</string>
+    <string name="favorit_title">remen</string>
+    <string name="setting_title">owah-owah</string>
+    <string name="setting_reminder">Owah Pangiling</string>
+    <string name="setting_reminder_desc">pengaturan untuk menghidupkan dan mematikan reminder</string>
+    <string name="time_reminder">Wayah Ngilingno</string>
+    <string name="title_setting">Owah</string>
+    <string name="err_empty">Ora ono data e</string>
 </resources>

@@ -4,18 +4,28 @@
     package="dicoding.submission.githubapi">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="dicoding.submission.githubapi.READ_DATABASE" android:protectionLevel="normal" />
+    <permission android:name="dicoding.submission.githubapi.WRITE_DATABASE" android:protectionLevel="normal" />
 
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
+
+        <provider
+            android:name=".providers.UserFavContentProvider"
+            android:authorities="dicoding.submission.githubapi"
+            android:exported="true"
+            android:readPermission="dicoding.submission.githubapi.READ_DATABASE"
+            android:writePermission="dicoding.submission.githubapi.WRITE_DATABASE" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +36,17 @@
         <activity
             android:name=".DetailUserActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FavoritActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SettingReminderActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <receiver
+            android:name=".reminder.ReminderReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
