@@ -1,16 +1,21 @@
 package dicoding.submission.githubapi
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import dicoding.submission.githubapi.reminder.Config
 import dicoding.submission.githubapi.reminder.ReminderReceiver
 import kotlinx.android.synthetic.main.activity_settingreminder.*
 
 class SettingReminderActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
 
-    private lateinit var reminderReceiver: ReminderReceiver
+    val TAG = "SettingReminderActivity"
     var isReminderRunning: Boolean = false
+    private lateinit var reminderReceiver: ReminderReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,7 @@ class SettingReminderActivity : AppCompatActivity(), CompoundButton.OnCheckedCha
 
     private fun update_ui() {
         isReminderRunning = reminderReceiver.isRunning(this)
+        Log.d(TAG, "update_ui: " + isReminderRunning)
         switch_reminder.isChecked = isReminderRunning
     }
 
@@ -36,14 +42,12 @@ class SettingReminderActivity : AppCompatActivity(), CompoundButton.OnCheckedCha
         if (check) {
             if (!reminderReceiver.isRunning(this@SettingReminderActivity)) {
                 reminderReceiver.setAlarm(this@SettingReminderActivity)
-                Toast.makeText(this@SettingReminderActivity, "alarm reminder aktif", Toast.LENGTH_LONG)
-                    .show()
+                //Toast.makeText(this@SettingReminderActivity, "alarm reminder aktif", Toast.LENGTH_LONG).show()
             }
         } else {
             if (reminderReceiver.isRunning(this@SettingReminderActivity)) {
-                reminderReceiver.destroy(this)
-                Toast.makeText(this@SettingReminderActivity, "alarm reminder nonaktif", Toast.LENGTH_LONG)
-                    .show()
+                reminderReceiver.destroy(this@SettingReminderActivity)
+                //Toast.makeText(this@SettingReminderActivity, "alarm reminder nonaktif", Toast.LENGTH_LONG).show()
             }
         }
         update_ui()

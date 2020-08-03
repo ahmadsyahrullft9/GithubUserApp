@@ -11,10 +11,11 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import dicoding.submission.githubapi.MainActivity
 import dicoding.submission.githubapi.R
-import java.time.LocalTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ReminderReceiver : BroadcastReceiver() {
@@ -26,6 +27,8 @@ class ReminderReceiver : BroadcastReceiver() {
     var channerName: String
     var notifTittle: String
     var notifMessage: String
+
+    val TAG = "ReminderReceiver"
 
     init {
         time_reminder = Config.TIME_REMINDER
@@ -45,9 +48,9 @@ class ReminderReceiver : BroadcastReceiver() {
     fun setAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, ReminderReceiver::class.java)
-        val timeInMillis: Long = getTimeInMilis(time_reminder)
+        val timeInMillis: Long = getTimeInMilis(time_reminder).timeInMillis
         val pendingIntent = PendingIntent.getBroadcast(context, notifiId, intent, 0)
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 
     fun destroy(context: Context) {
@@ -58,23 +61,18 @@ class ReminderReceiver : BroadcastReceiver() {
         alarmManager.cancel(pendingIntent)
     }
 
-    private fun getTimeInMilis(timeStr: String): Long {
-        //https://www.ict.social/kotlin/oop/date-and-time-in-kotlin-parsing-and-comparing
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val time = LocalTime.parse(timeStr)
-            val cal: Calendar = Calendar.getInstance()
-            cal.set(Calendar.HOUR_OF_DAY, time.hour)
-            cal.set(Calendar.MINUTE, time.minute)
-            cal.set(Calendar.SECOND, time.second)
-            Log.d(notifiTag, "setAlarm: " + time.hour + ":" + time.minute + ":" + time.second)
-            return cal.timeInMillis
-        } else {
-            val cal: Calendar = Calendar.getInstance()
-            cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeStr.subSequence(0, 2).toString()))
-            cal.set(Calendar.MINUTE, Integer.parseInt(timeStr.subSequence(4, 6).toString()))
-            cal.set(Calendar.SECOND, Integer.parseInt(timeStr.subSequence(8, 10).toString()))
-            return cal.timeInMillis
-        }
+    private fun getTimeInMilis(timeStr: String): Calendar {
+        val calNow: Calendar = Calendar.getInstance()
+        val cal: Calendar = calNow.clone() as Calendar
+        cal.timeInMillis = System.currentTimeMillis()
+        cal.set(Calendar.HOUR_OF_DAY, 9)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+
+        if (cal.compareTo(calNow) <= 0) cal.add(Calendar.DATE, 1)
+
+        print_logtime(cal.timeInMillis, "setAlarm")
+        return cal
     }
 
     @SuppressLint("ServiceCast")
@@ -83,12 +81,13 @@ class ReminderReceiver : BroadcastReceiver() {
         val appIntent =
             PendingIntent.getActivity(p0, notifiId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val ctInMilis: Long = System.currentTimeMillis()
+
         val nmc = p0?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notifBuilder: NotificationCompat.Builder = NotificationCompat.Builder(p0, channelId)
             .setContentText(notifMessage)
             .setContentTitle(notifTittle)
             .setAutoCancel(true)
-            .setWhen(getTimeInMilis(time_reminder))
             .setContentIntent(appIntent)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -101,5 +100,12 @@ class ReminderReceiver : BroadcastReceiver() {
         }
 
         nmc.notify(notifiTag, notifiId, notifBuilder.build())
+        print_logtime(ctInMilis, "onReceive")
+    }
+
+    fun print_logtime(ctInMilis: Long, tag: String) {
+        val date = Date(ctInMilis)
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        Log.d("print_logtime", tag + " : " + sdf.format(date))
     }
 }

@@ -4,8 +4,13 @@
     package="dicoding.submission.githubapi">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="dicoding.submission.githubapi.READ_DATABASE" android:protectionLevel="normal" />
-    <permission android:name="dicoding.submission.githubapi.WRITE_DATABASE" android:protectionLevel="normal" />
+
+    <permission
+        android:name="dicoding.submission.githubapi.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="dicoding.submission.githubapi.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="false"
@@ -47,6 +52,17 @@
             android:name=".reminder.ReminderReceiver"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver
+            android:name=".reminder.TimeChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
